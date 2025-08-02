@@ -2,7 +2,7 @@
 using OpenSCAD.NET.Transformations;
 using OpenSCAD.NET.Units;
 
-var cube = new Cube(5.3.mm())
+var cube = Cube.WithSideLength(5.mm())
     .TranslateX(5.mm())
     .RotateX(5.deg());
 

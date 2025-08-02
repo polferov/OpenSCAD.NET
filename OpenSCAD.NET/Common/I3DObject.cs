@@ -1,4 +1,4 @@
-namespace OpenSCAD.NET;
+namespace OpenSCAD.NET.Common;
 
 public interface I3DObject
 {
