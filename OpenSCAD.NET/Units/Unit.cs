@@ -1,22 +1,28 @@
 // ReSharper disable InconsistentNaming
 
+using System.Globalization;
 using System.Numerics;
 
-namespace OpenSCAD.NET;
+namespace OpenSCAD.NET.Units;
 
 public readonly struct Unit :
     IAdditionOperators<Unit, Unit, Unit>,
     IMultiplyOperators<Unit, decimal, Unit>,
     IDivisionOperators<Unit, decimal, Unit>
 {
+    public decimal Millimeters { get; }
+
     private Unit(decimal mm)
     {
         Millimeters = mm;
     }
 
-    public decimal Millimeters { get; }
+    public override string ToString()
+    {
+        return Millimeters.ToString(CultureInfo.InvariantCulture);
+    }
 
-    public static implicit operator Unit(decimal mm)
+    public static implicit operator Unit(int mm) // to be able to just wire 0
         => new(mm);
 
     public static Unit FromMillimeters(decimal mm)
