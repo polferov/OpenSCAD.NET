@@ -2,9 +2,9 @@
 using OpenSCAD.NET.Transformations;
 using OpenSCAD.NET.Units;
 
-var cube = Cube.WithSideLength(5.mm())
-    .TranslateX(5.mm())
-    .RotateX(5.deg());
+var cube = Cube.WithSideLength(10.mm())
+    .TranslateX(10.mm())
+    .RotateX(10.deg());
 
 
 var sw = new StringWriter();

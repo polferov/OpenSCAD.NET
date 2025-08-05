@@ -5,29 +5,29 @@ namespace OpenSCAD.NET.Primitives3D;
 
 public class Cube : I3DObject
 {
-    private readonly bool _centered;
+    private readonly bool _center;
     public Unit3D Dimensions { get; }
 
 
-    private Cube(Unit3D dimensions, bool centered = false)
+    private Cube(Unit3D dimensions, bool center = false)
     {
-        _centered = centered;
+        _center = center;
         Dimensions = dimensions;
     }
 
     public void Write(StringWriter w, int idt)
     {
         w.WriteIndentation(idt);
-        w.WriteLine($"cube({Dimensions}, centered = {_centered});");
+        w.WriteLine($"cube({Dimensions}, center = {_center.ToLowerString()});");
     }
 
-    public static Cube WithDimensions(Unit3D dimensions, bool centered = false)
+    public static Cube WithDimensions(Unit3D dimensions, bool center = false)
     {
-        return new Cube(dimensions, centered);
+        return new Cube(dimensions, center);
     }
 
-    public static Cube WithSideLength(Unit sideLength, bool centered = false)
+    public static Cube WithSideLength(Unit sideLength, bool center = false)
     {
-        return new Cube((sideLength, sideLength, sideLength), centered);
+        return new Cube((sideLength, sideLength, sideLength), center);
     }
 }
