@@ -1,8 +1,9 @@
-using System.Diagnostics.SymbolStore;
+using System.Diagnostics;
 using System.Reflection;
+using System.Reflection.Metadata;
 using OpenSCAD.NET.HotReload;
 
-[assembly: System.Reflection.Metadata.MetadataUpdateHandler(typeof(HotReloader))]
+[assembly: MetadataUpdateHandler(typeof(HotReloader))]
 
 namespace OpenSCAD.NET.HotReload;
 
@@ -30,6 +31,21 @@ public static class HotReloader
 
         return ep;
     });
+
+
+    private static readonly Lazy<Process> OpenScadProcess = new(() =>
+    {
+        var p = new Process();
+        p.StartInfo.FileName = "openscad";
+        p.StartInfo.ArgumentList.Add("out.scad");
+        p.Start();
+        return p;
+    });
+
+    public static void RunPreviewer()
+    {
+        _ = OpenScadProcess.Value;
+    }
 
     public static async ValueTask RunAsync(string[] args)
     {
