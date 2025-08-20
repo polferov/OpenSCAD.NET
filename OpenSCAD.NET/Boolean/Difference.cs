@@ -1,13 +1,15 @@
 using OpenSCAD.NET.Common;
+using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Boolean;
 
-public class Difference : ObjectWithChildren<I3DObject>, I3DObject
+public class Difference<TUnit> : ObjectWithChildren<TUnit>
+    where TUnit : IDimensionalUnit
 {
     public override string Name => "difference";
-    public override I3DObject[] Children { get; }
+    public override IDimensionalObject<TUnit>[] Children { get; }
 
-    public Difference(I3DObject baseObject, params I3DObject[] subtractedObjects)
+    public Difference(IDimensionalObject<TUnit> baseObject, params IDimensionalObject<TUnit>[] subtractedObjects)
     {
         if (subtractedObjects.Length == 0)
             throw new ArgumentException("At least one object must be provided to subtract from the base object.",
@@ -23,8 +25,10 @@ public class Difference : ObjectWithChildren<I3DObject>, I3DObject
 
 public static class DifferenceExtensions
 {
-    public static I3DObject Subtract(this I3DObject baseObject, params I3DObject[] subtractedObject)
+    public static IDimensionalObject<TUnit> Subtract<TUnit>(this IDimensionalObject<TUnit> baseObject,
+        params IDimensionalObject<TUnit>[] subtractedObject)
+        where TUnit : IDimensionalUnit
     {
-        return new Difference(baseObject, subtractedObject);
+        return new Difference<TUnit>(baseObject, subtractedObject);
     }
 }

@@ -1,22 +1,20 @@
 using OpenSCAD.NET.Common;
+using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Modifiers;
 
-public class HighlightModifer<TChild>(TChild child) : ModifierBase<TChild>(child)
-    where TChild : IDimensionalObject
+public class HighlightModifer<TUnit>(IDimensionalObject<TUnit> child) : ModifierBase<TUnit>(child)
+    where TUnit : IDimensionalUnit
+
 {
     public override char ModifierChar => '#';
 }
 
 public static class HighlightModifierExtensions
 {
-    public static I3DObject Highlight(this I3DObject obj)
+    public static IDimensionalObject<TUnit> Highlight<TUnit>(this IDimensionalObject<TUnit> obj)
+        where TUnit : IDimensionalUnit
     {
-        return new HighlightModifer<I3DObject>(obj);
-    }
-
-    public static I2DObject Highlight(this I2DObject obj)
-    {
-        return new HighlightModifer<I2DObject>(obj);
+        return new HighlightModifer<TUnit>(obj);
     }
 }

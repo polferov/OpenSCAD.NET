@@ -1,10 +1,12 @@
+using OpenSCAD.NET.Units;
+
 namespace OpenSCAD.NET.Common;
 
-public abstract class ObjectWithChildren<TChild> : IDimensionalObject
-    where TChild : IDimensionalObject
+public abstract class ObjectWithChildren<TUnit> : IDimensionalObject<TUnit>
+    where TUnit : IDimensionalUnit
 {
     public abstract string Name { get; }
-    public abstract TChild[] Children { get; }
+    public abstract IDimensionalObject<TUnit>[] Children { get; }
     public abstract void WriteArgs(StringWriter w);
 
 

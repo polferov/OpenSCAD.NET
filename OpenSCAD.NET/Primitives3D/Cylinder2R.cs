@@ -3,7 +3,7 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Primitives3D;
 
-public class Cylinder2R(Unit radius1, Unit radius2, Unit height, bool center) : I3DObject
+public class Cylinder2R(Unit radius1, Unit radius2, Unit height, bool center) : IDimensionalObject<Unit3D>
 {
     public Unit Radius1 { get; } = radius1;
     public Unit Radius2 { get; } = radius2;

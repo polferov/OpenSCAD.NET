@@ -3,6 +3,7 @@ using System.Numerics;
 namespace OpenSCAD.NET.Units;
 
 public readonly struct Unit2D(Unit x, Unit y) :
+    IDimensionalUnit,
     IAdditionOperators<Unit2D, Unit2D, Unit2D>,
     IMultiplyOperators<Unit2D, decimal, Unit2D>,
     IDivisionOperators<Unit2D, decimal, Unit2D>

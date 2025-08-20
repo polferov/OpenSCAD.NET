@@ -3,11 +3,13 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Transformations;
 
-public class Translation<TChild>(Unit3D amount, params TChild[] children) : ObjectWithChildren<TChild>, I3DObject, I2DObject
-    where TChild : IDimensionalObject
+public class Translation<TUnit>(Unit3D amount, params IDimensionalObject<TUnit>[] children)
+    : ObjectWithChildren<TUnit>
+    where TUnit : IDimensionalUnit
+
 {
     public Unit3D Amount { get; } = amount;
-    public override TChild[] Children { get; } = children;
+    public override IDimensionalObject<TUnit>[] Children { get; } = children;
     public override string Name => "translate";
 
     public override void WriteArgs(StringWriter w)
@@ -18,28 +20,33 @@ public class Translation<TChild>(Unit3D amount, params TChild[] children) : Obje
 
 public static class TranslationExtensions
 {
-    public static I3DObject Translate(this I3DObject obj, Unit3D amount)
+    public static IDimensionalObject<TUnit> Translate<TUnit>(this IDimensionalObject<TUnit> obj, Unit3D amount)
+        where TUnit : IDimensionalUnit
     {
-        return new Translation<I3DObject>(amount, obj);
+        return new Translation<TUnit>(amount, obj);
     }
 
-    public static I3DObject Translate(this I3DObject obj, Unit x, Unit y, Unit z)
+    public static IDimensionalObject<TUnit> Translate<TUnit>(this IDimensionalObject<TUnit> obj, Unit x, Unit y, Unit z)
+        where TUnit : IDimensionalUnit
     {
-        return new Translation<I3DObject>((x, y, z), obj);
+        return new Translation<TUnit>((x, y, z), obj);
     }
 
-    public static I3DObject TranslateX(this I3DObject obj, Unit amount)
+    public static IDimensionalObject<TUnit> TranslateX<TUnit>(this IDimensionalObject<TUnit> obj, Unit amount)
+        where TUnit : IDimensionalUnit
     {
-        return new Translation<I3DObject>((amount, 0, 0), obj);
+        return new Translation<TUnit>((amount, 0, 0), obj);
     }
 
-    public static I3DObject TranslateY(this I3DObject obj, Unit amount)
+    public static IDimensionalObject<TUnit> TranslateY<TUnit>(this IDimensionalObject<TUnit> obj, Unit amount)
+        where TUnit : IDimensionalUnit
     {
-        return new Translation<I3DObject>((0, amount, 0), obj);
+        return new Translation<TUnit>((0, amount, 0), obj);
     }
 
-    public static I3DObject TranslateZ(this I3DObject obj, Unit amount)
+    public static IDimensionalObject<TUnit> TranslateZ<TUnit>(this IDimensionalObject<TUnit> obj, Unit amount)
+        where TUnit : IDimensionalUnit
     {
-        return new Translation<I3DObject>((0, 0, amount), obj);
+        return new Translation<TUnit>((0, 0, amount), obj);
     }
 }

@@ -3,7 +3,7 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Primitives2D;
 
-public class Polygon : I2DObject
+public class Polygon : IDimensionalObject<Unit2D>
 {
     public Unit2D[] Points { get; }
 

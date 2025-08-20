@@ -3,9 +3,9 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Primitives3D;
 
-public class LinearExtrude(I2DObject child, Unit height) : I3DObject
+public class LinearExtrude(IDimensionalObject<Unit2D> child, Unit height) : IDimensionalObject<Unit3D>
 {
-    public I2DObject Child { get; } = child;
+    public IDimensionalObject<Unit2D> Child { get; } = child;
     public Unit Height { get; } = height;
 
     public void Write(StringWriter w, int idt)
@@ -18,7 +18,7 @@ public class LinearExtrude(I2DObject child, Unit height) : I3DObject
 
 public static class LinearExtrudeExtensions
 {
-    public static LinearExtrude Extrude(this I2DObject child, Unit height)
+    public static LinearExtrude Extrude(this IDimensionalObject<Unit2D> child, Unit height)
     {
         return new LinearExtrude(child, height);
     }

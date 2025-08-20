@@ -1,12 +1,14 @@
 using OpenSCAD.NET.Common;
+using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Transformations;
 
-public class Minkowski<TChild>(params TChild[] children) : ObjectWithChildren<TChild>, I3DObject, I2DObject
-    where TChild : IDimensionalObject
+public class Minkowski<TUnit>(params IDimensionalObject<TUnit>[] children) : ObjectWithChildren<TUnit>
+    where TUnit : IDimensionalUnit
+
 {
     public override string Name => "minkowski";
-    public override TChild[] Children { get; } = children;
+    public override IDimensionalObject<TUnit>[] Children { get; } = children;
 
     public override void WriteArgs(StringWriter w)
     {
@@ -16,13 +18,9 @@ public class Minkowski<TChild>(params TChild[] children) : ObjectWithChildren<TC
 
 public static class MinkowskiExtensions
 {
-    public static I3DObject Minkowski(this I3DObject obj, params I3DObject[] others)
+    public static IDimensionalObject<TUnit> Minkowski<TUnit>(this IDimensionalObject<TUnit> obj,
+        params IDimensionalObject<TUnit>[] others) where TUnit : IDimensionalUnit
     {
-        return new Minkowski<I3DObject>(new[] { obj }.Concat(others).ToArray());
-    }
-
-    public static I2DObject Minkowski(this I2DObject obj, params I2DObject[] others)
-    {
-        return new Minkowski<I2DObject>(new[] { obj }.Concat(others).ToArray());
+        return new Minkowski<TUnit>(new[] { obj }.Concat(others).ToArray());
     }
 }

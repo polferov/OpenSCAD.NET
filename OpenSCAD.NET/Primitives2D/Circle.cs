@@ -3,7 +3,7 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Primitives2D;
 
-public class Circle : I2DObject, IHasFragmentOptions
+public class Circle : IDimensionalObject<Unit2D>, IHasFragmentOptions
 {
     public Unit Radius { get; }
     public Unit Diameter => Radius * 2;

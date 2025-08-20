@@ -1,22 +1,20 @@
 using OpenSCAD.NET.Common;
+using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Modifiers;
 
-public class ShowOnlyModifier<TChild>(TChild child) : ModifierBase<TChild>(child)
-    where TChild : IDimensionalObject
+public class ShowOnlyModifier<TUnit>(IDimensionalObject<TUnit> child) : ModifierBase<TUnit>(child)
+    where TUnit : IDimensionalUnit
+
 {
     public override char ModifierChar => '!';
 }
 
 public static class ShowOnlyModifierExtensions
 {
-    public static I3DObject ShowOnly(this I3DObject obj)
+    public static IDimensionalObject<TUnit> ShowOnly<TUnit>(this IDimensionalObject<TUnit> obj)
+        where TUnit : IDimensionalUnit
     {
-        return new ShowOnlyModifier<I3DObject>(obj);
-    }
-
-    public static I2DObject ShowOnly(this I2DObject obj)
-    {
-        return new ShowOnlyModifier<I2DObject>(obj);
+        return new ShowOnlyModifier<TUnit>(obj);
     }
 }

@@ -3,7 +3,7 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Primitives3D;
 
-public class Sphere(Unit radius) : I3DObject
+public class Sphere(Unit radius) : IDimensionalObject<Unit3D>
 {
     public void Write(StringWriter w, int idt)
     {

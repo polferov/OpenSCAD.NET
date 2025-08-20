@@ -1,11 +1,13 @@
 using OpenSCAD.NET.Common;
+using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Boolean;
 
-public class Intersection(params I3DObject[] children) : ObjectWithChildren<I3DObject>, I3DObject
+public class Intersection<TUnit>(params IDimensionalObject<TUnit>[] children) : ObjectWithChildren<TUnit>
+    where TUnit : IDimensionalUnit
 {
     public override string Name => "intersection";
-    public override I3DObject[] Children { get; } = children;
+    public override IDimensionalObject<TUnit>[] Children { get; } = children;
 
     public override void WriteArgs(StringWriter w)
     {
@@ -15,13 +17,9 @@ public class Intersection(params I3DObject[] children) : ObjectWithChildren<I3DO
 
 public static class IntersectionExtensions
 {
-    public static I3DObject Intersect(this I3DObject[] objects)
+    public static IDimensionalObject<TUnit> Intersect<TUnit>(this IDimensionalObject<TUnit>[] objects)
+        where TUnit : IDimensionalUnit
     {
-        return new Intersection(objects);
-    }
-
-    public static I3DObject Intersect(this I3DObject obj, params I3DObject[] otherObjects)
-    {
-        return new Intersection([obj, ..otherObjects]);
+        return new Intersection<TUnit>(objects);
     }
 }

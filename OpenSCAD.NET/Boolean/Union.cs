@@ -1,11 +1,13 @@
 using OpenSCAD.NET.Common;
+using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Boolean;
 
-public class Union(params I3DObject[] children) : ObjectWithChildren<I3DObject>, I3DObject
+public class Union<TUnit>(params IDimensionalObject<TUnit>[] children) : ObjectWithChildren<TUnit>
+    where TUnit : IDimensionalUnit
 {
     public override string Name => "union";
-    public override I3DObject[] Children { get; } = children;
+    public override IDimensionalObject<TUnit>[] Children { get; } = children;
 
     public override void WriteArgs(StringWriter w)
     {
@@ -15,13 +17,9 @@ public class Union(params I3DObject[] children) : ObjectWithChildren<I3DObject>,
 
 public static class UnionExtensions
 {
-    public static I3DObject Union(this I3DObject[] objects)
+    public static IDimensionalObject<TUnit> Union<TUnit>(this IDimensionalObject<TUnit>[] objects)
+        where TUnit : IDimensionalUnit
     {
-        return new Union(objects);
-    }
-
-    public static I3DObject Union(this I3DObject obj, params I3DObject[] otherObjects)
-    {
-        return new Union([obj, ..otherObjects]);
+        return new Union<TUnit>(objects);
     }
 }

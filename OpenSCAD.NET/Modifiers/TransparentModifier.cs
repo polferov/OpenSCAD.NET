@@ -1,22 +1,20 @@
 using OpenSCAD.NET.Common;
+using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Modifiers;
 
-public class TransparentModifier<TChild>(TChild child) : ModifierBase<TChild>(child)
-    where TChild : IDimensionalObject
+public class TransparentModifier<TUnit>(IDimensionalObject<TUnit> child) : ModifierBase<TUnit>(child)
+    where TUnit : IDimensionalUnit
+
 {
     public override char ModifierChar => '%';
 }
 
 public static class TransparentModifierExtensions
 {
-    public static I3DObject Transparent(this I3DObject obj)
+    public static IDimensionalObject<TUnit> Transparent<TUnit>(this IDimensionalObject<TUnit> obj)
+        where TUnit : IDimensionalUnit
     {
-        return new TransparentModifier<I3DObject>(obj);
-    }
-
-    public static I2DObject Transparent(this I2DObject obj)
-    {
-        return new TransparentModifier<I2DObject>(obj);
+        return new TransparentModifier<TUnit>(obj);
     }
 }

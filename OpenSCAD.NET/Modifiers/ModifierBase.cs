@@ -1,11 +1,13 @@
 using OpenSCAD.NET.Common;
+using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Modifiers;
 
-public abstract class ModifierBase<TChild>(TChild child) : I2DObject, I3DObject
-    where TChild : IDimensionalObject
+public abstract class ModifierBase<TUnit>(IDimensionalObject<TUnit> child) : IDimensionalObject<TUnit>
+    where TUnit : IDimensionalUnit
+
 {
-    public TChild Child { get; } = child;
+    public IDimensionalObject<TUnit> Child { get; } = child;
 
     public abstract char ModifierChar { get; }
 

@@ -1,22 +1,20 @@
 using OpenSCAD.NET.Common;
+using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Modifiers;
 
-public class DisableModifier<TChild>(TChild child) : ModifierBase<TChild>(child)
-    where TChild : IDimensionalObject
+public class DisableModifier<TUnit>(IDimensionalObject<TUnit> child) : ModifierBase<TUnit>(child)
+    where TUnit : IDimensionalUnit
+
 {
     public override char ModifierChar => '*';
 }
 
 public static class DisableModifierExtensions
 {
-    public static I3DObject Disable(this I3DObject obj)
+    public static IDimensionalObject<TUnit> Disable<TUnit>(this IDimensionalObject<TUnit> obj)
+        where TUnit : IDimensionalUnit
     {
-        return new DisableModifier<I3DObject>(obj);
-    }
-
-    public static I2DObject Disable(this I2DObject obj)
-    {
-        return new DisableModifier<I2DObject>(obj);
+        return new DisableModifier<TUnit>(obj);
     }
 }

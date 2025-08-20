@@ -3,7 +3,7 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Primitives3D;
 
-public class Cube : I3DObject
+public class Cube : IDimensionalObject<Unit3D>
 {
     private readonly bool _center;
     public Unit3D Dimensions { get; }
