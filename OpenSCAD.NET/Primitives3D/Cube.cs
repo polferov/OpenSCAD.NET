@@ -21,12 +21,12 @@ public class Cube : I3DObject
         w.WriteLine($"cube({Dimensions}, center = {_center.ToLowerString()});");
     }
 
-    public static Cube WithDimensions(Unit3D dimensions, bool center = false)
+    public static Cube FromDimensions(Unit3D dimensions, bool center = false)
     {
         return new Cube(dimensions, center);
     }
 
-    public static Cube WithSideLength(Unit sideLength, bool center = false)
+    public static Cube FromSideLength(Unit sideLength, bool center = false)
     {
         return new Cube((sideLength, sideLength, sideLength), center);
     }
