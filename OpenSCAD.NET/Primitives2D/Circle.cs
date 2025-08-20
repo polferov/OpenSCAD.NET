@@ -1,11 +1,13 @@
+using OpenSCAD.NET.Common;
 using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Primitives2D;
 
-public class Circle
+public class Circle : I2DObject, IHasFragmentOptions
 {
     public Unit Radius { get; }
     public Unit Diameter => Radius * 2;
+    public FragmentOptions FragmentOptions { get; set; }
 
     private Circle(Unit radius)
     {
@@ -21,4 +23,11 @@ public class Circle
     {
         return new Circle(diameter / 2);
     }
+
+    public void Write(StringWriter w, int idt)
+    {
+        w.WriteIndentation(idt);
+        w.WriteLine($"circle(r={Radius} {FragmentOptions});");
+    }
+
 }

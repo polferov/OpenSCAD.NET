@@ -2,7 +2,7 @@ using OpenSCAD.NET.Common;
 
 namespace OpenSCAD.NET.Boolean;
 
-public class Difference : ObjectWithChildren
+public class Difference : ObjectWithChildren<I3DObject>, I3DObject
 {
     public override string Name => "difference";
     public override I3DObject[] Children { get; }

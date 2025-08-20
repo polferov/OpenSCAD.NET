@@ -33,18 +33,18 @@ public static class HotReloader
     });
 
 
-    private static readonly Lazy<Process> OpenScadProcess = new(() =>
+
+    public static void RunPreviewer()
     {
         var p = new Process();
         p.StartInfo.FileName = "openscad";
         p.StartInfo.ArgumentList.Add("out.scad");
         p.Start();
-        return p;
-    });
-
-    public static void RunPreviewer()
-    {
-        _ = OpenScadProcess.Value;
+        Task.Run(async () =>
+        {
+            await p.WaitForExitAsync();
+            Environment.Exit(0);
+        });
     }
 
     public static async ValueTask RunAsync(string[] args)

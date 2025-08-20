@@ -2,7 +2,7 @@ using OpenSCAD.NET.Common;
 
 namespace OpenSCAD.NET.Boolean;
 
-public class Intersection(params I3DObject[] children) : ObjectWithChildren
+public class Intersection(params I3DObject[] children) : ObjectWithChildren<I3DObject>, I3DObject
 {
     public override string Name => "intersection";
     public override I3DObject[] Children { get; } = children;

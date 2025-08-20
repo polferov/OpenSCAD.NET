@@ -1,9 +1,10 @@
 namespace OpenSCAD.NET.Common;
 
-public abstract class ObjectWithChildren : I3DObject
+public abstract class ObjectWithChildren<TChild> : IDimensionalObject
+    where TChild : IDimensionalObject
 {
     public abstract string Name { get; }
-    public abstract I3DObject[] Children { get; }
+    public abstract TChild[] Children { get; }
     public abstract void WriteArgs(StringWriter w);
 
 

@@ -1,17 +1,25 @@
-﻿using OpenSCAD.NET.HotReload;
+﻿using OpenSCAD.NET.Common;
+using OpenSCAD.NET.HotReload;
+using OpenSCAD.NET.Primitives2D;
 using OpenSCAD.NET.Primitives3D;
 using OpenSCAD.NET.Transformations;
 using OpenSCAD.NET.Units;
 
 await HotReloader.RunAsync(args);
+HotReloader.RunPreviewer();
 
-var cube = Cube.WithSideLength(10.mm())
-    .TranslateX(10.mm())
-    .RotateX(6.deg())
-    .TranslateX(10.mm());
+var thickness = 5;
 
+var polygon = Polygon.FromPoints((0, 0), (50, 0), (50, 20),
+        (50 + thickness, 20), (50 + thickness, -thickness), (-thickness, -thickness),
+        (-thickness, 60), (0, 60))
+    .Minkowski(Circle.FromRadius(5.mm()).WithFragmentOptions(FragmentOptions.HighRes))
+    .Extrude(15.mm());
+
+
+var model = polygon;
 
 var sw = new StringWriter();
-cube.Write(sw, 0);
-
-Console.WriteLine(sw.ToString());
+model.Write(sw, 0);
+var scad = sw.ToString();
+File.WriteAllText("./out.scad", scad);

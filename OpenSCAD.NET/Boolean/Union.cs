@@ -2,7 +2,7 @@ using OpenSCAD.NET.Common;
 
 namespace OpenSCAD.NET.Boolean;
 
-public class Union(params I3DObject[] children) : ObjectWithChildren
+public class Union(params I3DObject[] children) : ObjectWithChildren<I3DObject>, I3DObject
 {
     public override string Name => "union";
     public override I3DObject[] Children { get; } = children;
