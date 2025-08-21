@@ -5,23 +5,23 @@ namespace OpenSCAD.NET.Extended2D;
 
 public class PolygonBuilder
 {
-    public Unit2D Point { get; }
-    public PolygonBuilder? Previous { get; }
+    private readonly List<Unit2D> _points;
+    public Unit2D Point => _points.LastOrDefault(new Unit2D(0, 0));
 
-    private PolygonBuilder(Unit2D point, PolygonBuilder? previous)
+    private PolygonBuilder(List<Unit2D> points)
     {
-        Point = point;
-        Previous = previous;
+        _points = points;
     }
 
     public static PolygonBuilder FromPoint(Unit2D point)
     {
-        return new PolygonBuilder(point, null);
+        return new PolygonBuilder([point]);
     }
 
     public PolygonBuilder AddPoint(Unit2D point)
     {
-        return new PolygonBuilder(point, this);
+        _points.Add(point);
+        return this;
     }
 
     public PolygonBuilder ThenMove(Unit2D offset)
@@ -47,15 +47,9 @@ public class PolygonBuilder
 
     public Polygon Build()
     {
-        var points = new List<Unit2D>();
-        var current = this;
-        while (current != null)
-        {
-            points.Add(current.Point);
-            current = current.Previous;
-        }
+        if (_points.Count < 3)
+            throw new InvalidOperationException("A polygon must have at least 3 points.");
 
-        points.Reverse();
-        return Polygon.FromPoints(points.ToArray());
+        return Polygon.FromPoints(_points.ToArray());
     }
 }
