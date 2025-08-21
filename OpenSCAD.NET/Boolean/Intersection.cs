@@ -27,4 +27,11 @@ public static class IntersectionExtensions
     {
         return new Intersection<TUnit>(objects);
     }
+    
+    public static IDimensionalObject<TUnit> Intersect<TUnit>(this IDimensionalObject<TUnit> object1,
+        IDimensionalObject<TUnit> object2)
+        where TUnit : IDimensionalUnit
+    {
+        return new Intersection<TUnit>(object1, object2);
+    }
 }

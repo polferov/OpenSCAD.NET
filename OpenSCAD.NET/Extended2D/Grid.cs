@@ -75,10 +75,19 @@ public class Grid : IDimensionalObject<Unit2D>
             (lineWidth / 2, lineWidth / 2), hole);
     }
 
+    public static Square DefaultSquareFactory(Unit sideLength)
+    {
+        return Square.FromSideLength(sideLength);
+    }
+
     public static Grid DiagonalSquareHoleGrid(int cellsX, int cellsY, Unit diagonalLength, Unit diagonalLineWidth)
+        => DiagonalSquareHoleGrid(cellsX, cellsY, diagonalLength, diagonalLineWidth, DefaultSquareFactory);
+
+    public static Grid DiagonalSquareHoleGrid(int cellsX, int cellsY, Unit diagonalLength, Unit diagonalLineWidth,
+        Func<Unit, IDimensionalObject<Unit2D>> squareFactory)
     {
         var sideLength = diagonalLength / (decimal)Math.Sqrt(2);
-        var square = Square.FromSideLength(sideLength)
+        var square = squareFactory(sideLength)
             .RotateZ(45.deg());
 
         var lineWidth = diagonalLineWidth * (decimal)Math.Sqrt(2);

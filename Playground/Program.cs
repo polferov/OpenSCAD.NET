@@ -10,17 +10,17 @@ using OpenSCAD.NET.Units;
 await HotReloader.RunAsync(args);
 HotReloader.RunPreviewer();
 
-var thickness = 5;
-
-var polygon = Polygon.FromPoints((0, 0), (50, 0), (50, 20),
-        (50 + thickness, 20), (50 + thickness, -thickness), (-thickness, -thickness),
-        (-thickness, 60), (0, 60))
-    .Minkowski(Circle.FromRadius(5.mm()).WithFragmentOptions(FragmentOptions.HighRes))
-    .Extrude(15.mm());
-
-var grid = Grid.DiagonalSquareHoleGrid(5, 10, 10.mm(), 1.mm());
+var grid = Grid.DiagonalSquareHoleGrid(5, 10, 10.mm(), 1.mm(), SquareFactory);
 
 var sw = new StringWriter();
 grid.Write(sw, 0);
 var scad = sw.ToString();
 File.WriteAllText("./out.scad", scad);
+return;
+
+IDimensionalObject<Unit2D> SquareFactory(Unit sideLength)
+{
+    var circle = Circle.FromDiameter(sideLength)
+        .Translate(sideLength.ToUnit2D() / 2);
+    return circle;
+}

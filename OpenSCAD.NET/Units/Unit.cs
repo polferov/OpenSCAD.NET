@@ -39,6 +39,12 @@ public readonly struct Unit :
         => right == 0
             ? throw new DivideByZeroException("Cannot divide by zero in Unit division.")
             : new Unit(left.Millimeters / right);
+
+    public Unit2D ToUnit2D()
+        => new Unit2D(this, this);
+
+    public Unit3D ToUnit3D()
+        => new Unit3D(this, this, this);
 }
 
 public static class LengthUnitExtensions
