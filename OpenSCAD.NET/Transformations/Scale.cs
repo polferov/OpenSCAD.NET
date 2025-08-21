@@ -3,13 +3,18 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Transformations;
 
-public class Scale<TUnit>(TUnit scale, params IDimensionalObject<TUnit>[] children)
-    : ObjectWithChildren<TUnit>
+public class Scale<TUnit> : ObjectWithChildren<TUnit>
     where TUnit : IDimensionalUnit
 {
-    public TUnit ScaleDimensions { get; } = scale;
+    internal Scale(TUnit scale, params IDimensionalObject<TUnit>[] children)
+    {
+        ScaleDimensions = scale;
+        Children = children;
+    }
+
+    public TUnit ScaleDimensions { get; }
     public override string Name => "scale";
-    public override IDimensionalObject<TUnit>[] Children { get; } = children;
+    public override IDimensionalObject<TUnit>[] Children { get; }
 
     public override void WriteArgs(StringWriter w)
     {

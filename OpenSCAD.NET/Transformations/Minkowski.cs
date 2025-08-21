@@ -3,12 +3,17 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Transformations;
 
-public class Minkowski<TUnit>(params IDimensionalObject<TUnit>[] children) : ObjectWithChildren<TUnit>
+public class Minkowski<TUnit> : ObjectWithChildren<TUnit>
     where TUnit : IDimensionalUnit
 
 {
+    internal Minkowski(params IDimensionalObject<TUnit>[] children)
+    {
+        Children = children;
+    }
+
     public override string Name => "minkowski";
-    public override IDimensionalObject<TUnit>[] Children { get; } = children;
+    public override IDimensionalObject<TUnit>[] Children { get; }
 
     public override void WriteArgs(StringWriter w)
     {

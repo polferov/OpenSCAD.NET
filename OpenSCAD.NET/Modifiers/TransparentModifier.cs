@@ -3,10 +3,14 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Modifiers;
 
-public class TransparentModifier<TUnit>(IDimensionalObject<TUnit> child) : ModifierBase<TUnit>(child)
+public class TransparentModifier<TUnit> : ModifierBase<TUnit>
     where TUnit : IDimensionalUnit
 
 {
+    internal TransparentModifier(IDimensionalObject<TUnit> child) : base(child)
+    {
+    }
+
     public override char ModifierChar => '%';
 }
 

@@ -9,7 +9,7 @@ public class Difference<TUnit> : ObjectWithChildren<TUnit>
     public override string Name => "difference";
     public override IDimensionalObject<TUnit>[] Children { get; }
 
-    public Difference(IDimensionalObject<TUnit> baseObject, params IDimensionalObject<TUnit>[] subtractedObjects)
+    internal Difference(IDimensionalObject<TUnit> baseObject, params IDimensionalObject<TUnit>[] subtractedObjects)
     {
         if (subtractedObjects.Length == 0)
             throw new ArgumentException("At least one object must be provided to subtract from the base object.",

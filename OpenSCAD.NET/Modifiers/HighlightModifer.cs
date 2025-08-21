@@ -3,10 +3,14 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Modifiers;
 
-public class HighlightModifer<TUnit>(IDimensionalObject<TUnit> child) : ModifierBase<TUnit>(child)
+public class HighlightModifer<TUnit> : ModifierBase<TUnit>
     where TUnit : IDimensionalUnit
 
 {
+    internal HighlightModifer(IDimensionalObject<TUnit> child) : base(child)
+    {
+    }
+
     public override char ModifierChar => '#';
 }
 

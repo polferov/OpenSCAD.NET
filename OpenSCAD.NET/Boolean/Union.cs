@@ -3,11 +3,16 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Boolean;
 
-public class Union<TUnit>(params IDimensionalObject<TUnit>[] children) : ObjectWithChildren<TUnit>
+public class Union<TUnit> : ObjectWithChildren<TUnit>
     where TUnit : IDimensionalUnit
 {
+    internal Union(params IDimensionalObject<TUnit>[] children)
+    {
+        Children = children;
+    }
+
     public override string Name => "union";
-    public override IDimensionalObject<TUnit>[] Children { get; } = children;
+    public override IDimensionalObject<TUnit>[] Children { get; }
 
     public override void WriteArgs(StringWriter w)
     {

@@ -3,10 +3,14 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Modifiers;
 
-public class DisableModifier<TUnit>(IDimensionalObject<TUnit> child) : ModifierBase<TUnit>(child)
+public class DisableModifier<TUnit> : ModifierBase<TUnit>
     where TUnit : IDimensionalUnit
 
 {
+    internal DisableModifier(IDimensionalObject<TUnit> child) : base(child)
+    {
+    }
+
     public override char ModifierChar => '*';
 }
 

@@ -3,11 +3,16 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Boolean;
 
-public class Intersection<TUnit>(params IDimensionalObject<TUnit>[] children) : ObjectWithChildren<TUnit>
+public class Intersection<TUnit> : ObjectWithChildren<TUnit>
     where TUnit : IDimensionalUnit
 {
+    internal Intersection(params IDimensionalObject<TUnit>[] children)
+    {
+        Children = children;
+    }
+
     public override string Name => "intersection";
-    public override IDimensionalObject<TUnit>[] Children { get; } = children;
+    public override IDimensionalObject<TUnit>[] Children { get; }
 
     public override void WriteArgs(StringWriter w)
     {

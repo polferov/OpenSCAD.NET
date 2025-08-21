@@ -3,16 +3,25 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Primitives3D;
 
-public class Cylinder1R(Unit radius, Unit height, bool center = false, FragmentOptions fragmentOptions = default)
-    : IDimensionalObject<Unit3D>, IHasFragmentOptions<Cylinder1R>
+public class Cylinder1R : IDimensionalObject<Unit3D>, IHasFragmentOptions<Cylinder1R>
 {
-    public Unit Radius { get; } = radius;
-    public Unit Height { get; } = height;
+    private readonly bool _center;
+
+    private Cylinder1R(Unit radius, Unit height, bool center = false, FragmentOptions fragmentOptions = default)
+    {
+        _center = center;
+        Radius = radius;
+        Height = height;
+        FragmentOptions = fragmentOptions;
+    }
+
+    public Unit Radius { get; }
+    public Unit Height { get; }
 
     public void Write(StringWriter w, int idt)
     {
         w.WriteIndentation(idt);
-        w.WriteLine($"cylinder(r={Radius}, h={Height}, center={center.ToLowerString()} {FragmentOptions});");
+        w.WriteLine($"cylinder(r={Radius}, h={Height}, center={_center.ToLowerString()} {FragmentOptions});");
     }
 
     public static Cylinder1R FromRadiusAndHeight(Unit radius, Unit height, bool center = false,
@@ -23,10 +32,10 @@ public class Cylinder1R(Unit radius, Unit height, bool center = false, FragmentO
         FragmentOptions fragmentOptions = default)
         => new(diameter / 2, height, center, fragmentOptions);
 
-    public FragmentOptions FragmentOptions { get; } = fragmentOptions;
+    public FragmentOptions FragmentOptions { get; }
 
     public Cylinder1R WithFragmentOptions(FragmentOptions options)
     {
-        return new Cylinder1R(Radius, Height, center, options);
+        return new Cylinder1R(Radius, Height, _center, options);
     }
 }

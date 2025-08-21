@@ -3,13 +3,18 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Transformations;
 
-public class Rotation<TUnit>(Angle3D angle, params IDimensionalObject<TUnit>[] children)
-    : ObjectWithChildren<TUnit>
+public class Rotation<TUnit> : ObjectWithChildren<TUnit>
     where TUnit : IDimensionalUnit
 {
+    internal Rotation(Angle3D angle, params IDimensionalObject<TUnit>[] children)
+    {
+        Angle = angle;
+        Children = children;
+    }
+
     public override string Name => "rotate";
-    public Angle3D Angle { get; } = angle;
-    public override IDimensionalObject<TUnit>[] Children { get; } = children;
+    public Angle3D Angle { get; }
+    public override IDimensionalObject<TUnit>[] Children { get; }
 
     public override void WriteArgs(StringWriter w)
     {

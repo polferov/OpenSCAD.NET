@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenSCAD.NET", "OpenSCAD.NE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground", "Playground\Playground.csproj", "{45AD9C52-98A1-4710-A69F-2375377C4696}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenSCAD.NET.CondeConsistency", "OpenSCAD.NET.CondeConsistency\OpenSCAD.NET.CondeConsistency.csproj", "{3A90EFC5-80DF-4D50-B9A8-DD121B32674C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{45AD9C52-98A1-4710-A69F-2375377C4696}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45AD9C52-98A1-4710-A69F-2375377C4696}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45AD9C52-98A1-4710-A69F-2375377C4696}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A90EFC5-80DF-4D50-B9A8-DD121B32674C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A90EFC5-80DF-4D50-B9A8-DD121B32674C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A90EFC5-80DF-4D50-B9A8-DD121B32674C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A90EFC5-80DF-4D50-B9A8-DD121B32674C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

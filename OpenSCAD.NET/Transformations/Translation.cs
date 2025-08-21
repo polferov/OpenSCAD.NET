@@ -3,13 +3,18 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Transformations;
 
-public class Translation<TUnit>(Unit3D amount, params IDimensionalObject<TUnit>[] children)
-    : ObjectWithChildren<TUnit>
+public class Translation<TUnit> : ObjectWithChildren<TUnit>
     where TUnit : IDimensionalUnit
 
 {
-    public Unit3D Amount { get; } = amount;
-    public override IDimensionalObject<TUnit>[] Children { get; } = children;
+    internal Translation(Unit3D amount, params IDimensionalObject<TUnit>[] children)
+    {
+        Amount = amount;
+        Children = children;
+    }
+
+    public Unit3D Amount { get; }
+    public override IDimensionalObject<TUnit>[] Children { get; }
     public override string Name => "translate";
 
     public override void WriteArgs(StringWriter w)

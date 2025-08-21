@@ -3,10 +3,16 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Primitives3D;
 
-public class LinearExtrude(IDimensionalObject<Unit2D> child, Unit height) : IDimensionalObject<Unit3D>
+public class LinearExtrude : IDimensionalObject<Unit3D>
 {
-    public IDimensionalObject<Unit2D> Child { get; } = child;
-    public Unit Height { get; } = height;
+    internal LinearExtrude(IDimensionalObject<Unit2D> child, Unit height)
+    {
+        Child = child;
+        Height = height;
+    }
+
+    public IDimensionalObject<Unit2D> Child { get; }
+    public Unit Height { get; }
 
     public void Write(StringWriter w, int idt)
     {
