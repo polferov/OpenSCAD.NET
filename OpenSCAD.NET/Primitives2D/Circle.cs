@@ -3,15 +3,16 @@ using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Primitives2D;
 
-public class Circle : IDimensionalObject<Unit2D>, IHasFragmentOptions
+public class Circle : IDimensionalObject<Unit2D>, IHasFragmentOptions<Circle>
 {
     public Unit Radius { get; }
     public Unit Diameter => Radius * 2;
-    public FragmentOptions FragmentOptions { get; set; }
+    public FragmentOptions FragmentOptions { get; }
 
-    private Circle(Unit radius)
+    private Circle(Unit radius, FragmentOptions fragmentOptions = default)
     {
         Radius = radius;
+        FragmentOptions = fragmentOptions;
     }
 
     public static Circle FromRadius(Unit radius)
@@ -30,4 +31,8 @@ public class Circle : IDimensionalObject<Unit2D>, IHasFragmentOptions
         w.WriteLine($"circle(r={Radius} {FragmentOptions});");
     }
 
+    public Circle WithFragmentOptions(FragmentOptions options)
+    {
+        return new Circle(Radius, options);
+    }
 }

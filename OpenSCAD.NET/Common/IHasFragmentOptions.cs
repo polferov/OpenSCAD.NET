@@ -1,15 +1,9 @@
 namespace OpenSCAD.NET.Common;
 
-public interface IHasFragmentOptions
+public interface IHasFragmentOptions<TSelf>
+where TSelf : IHasFragmentOptions<TSelf>
 {
-    FragmentOptions FragmentOptions { get; set; }
-}
-
-public static class HasFragmentOptionsExtensions
-{
-    public static T WithFragmentOptions<T>(this T obj, FragmentOptions options) where T : IHasFragmentOptions
-    {
-        obj.FragmentOptions = options;
-        return obj;
-    }
+    public FragmentOptions FragmentOptions { get; }
+    TSelf WithFragmentOptions(FragmentOptions options);
+        
 }
