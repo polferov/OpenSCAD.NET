@@ -20,9 +20,7 @@ var polygon = Polygon.FromPoints((0, 0), (50, 0), (50, 20),
 
 var grid = Grid.DiagonalSquareHoleGrid(5, 10, 10.mm(), 1.mm());
 
-var model = grid;
-
 var sw = new StringWriter();
-model.Write(sw, 0);
+grid.Write(sw, 0);
 var scad = sw.ToString();
 File.WriteAllText("./out.scad", scad);
