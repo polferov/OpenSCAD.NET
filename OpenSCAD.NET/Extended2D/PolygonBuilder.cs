@@ -1,6 +1,7 @@
+using OpenSCAD.NET.Primitives2D;
 using OpenSCAD.NET.Units;
 
-namespace OpenSCAD.NET.Primitives2D;
+namespace OpenSCAD.NET.Extended2D;
 
 public class PolygonBuilder
 {
