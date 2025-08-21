@@ -1,8 +1,9 @@
+using OpenSCAD.NET.Common;
 using OpenSCAD.NET.Units;
 
 namespace OpenSCAD.NET.Primitives2D;
 
-public class Square
+public class Square : IDimensionalObject<Unit2D>
 {
     private Square(Unit2D dimensions)
     {
@@ -16,4 +17,10 @@ public class Square
 
     public static Square FromDimensions(Unit2D dimensions)
         => new(dimensions);
+
+    public void Write(StringWriter w, int idt)
+    {
+        w.WriteIndentation(idt);
+        w.WriteLine($"square({Dimensions});");
+    }
 }

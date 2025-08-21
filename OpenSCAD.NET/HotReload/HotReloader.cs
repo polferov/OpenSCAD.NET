@@ -9,6 +9,7 @@ namespace OpenSCAD.NET.HotReload;
 
 public static class HotReloader
 {
+    private static bool _processRunning;
     private static bool _isFirstRun = true;
     private static string[] _args = null!;
 
@@ -33,9 +34,11 @@ public static class HotReloader
     });
 
 
-
     public static void RunPreviewer()
     {
+        if (_processRunning)
+            return;
+        _processRunning = true;
         var p = new Process();
         p.StartInfo.FileName = "openscad";
         p.StartInfo.ArgumentList.Add("out.scad");

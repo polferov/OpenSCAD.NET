@@ -7,13 +7,13 @@ public class Translation<TUnit> : ObjectWithChildren<TUnit>
     where TUnit : IDimensionalUnit
 
 {
-    internal Translation(Unit3D amount, params IDimensionalObject<TUnit>[] children)
+    internal Translation(TUnit amount, params IDimensionalObject<TUnit>[] children)
     {
         Amount = amount;
         Children = children;
     }
 
-    public Unit3D Amount { get; }
+    public TUnit Amount { get; }
     public override IDimensionalObject<TUnit>[] Children { get; }
     public override string Name => "translate";
 
@@ -25,33 +25,44 @@ public class Translation<TUnit> : ObjectWithChildren<TUnit>
 
 public static class TranslationExtensions
 {
-    public static IDimensionalObject<TUnit> Translate<TUnit>(this IDimensionalObject<TUnit> obj, Unit3D amount)
+    public static IDimensionalObject<TUnit> Translate<TUnit>(this IDimensionalObject<TUnit> obj, TUnit amount)
         where TUnit : IDimensionalUnit
     {
         return new Translation<TUnit>(amount, obj);
     }
 
-    public static IDimensionalObject<TUnit> Translate<TUnit>(this IDimensionalObject<TUnit> obj, Unit x, Unit y, Unit z)
-        where TUnit : IDimensionalUnit
+    public static IDimensionalObject<Unit3D> Translate(this IDimensionalObject<Unit3D> obj, Unit x, Unit y, Unit z)
     {
-        return new Translation<TUnit>((x, y, z), obj);
+        return new Translation<Unit3D>((x, y, z), obj);
     }
 
-    public static IDimensionalObject<TUnit> TranslateX<TUnit>(this IDimensionalObject<TUnit> obj, Unit amount)
-        where TUnit : IDimensionalUnit
+    public static IDimensionalObject<Unit2D> Translate(this IDimensionalObject<Unit2D> obj, Unit x, Unit y)
     {
-        return new Translation<TUnit>((amount, 0, 0), obj);
+        return new Translation<Unit2D>((x, y), obj);
     }
 
-    public static IDimensionalObject<TUnit> TranslateY<TUnit>(this IDimensionalObject<TUnit> obj, Unit amount)
-        where TUnit : IDimensionalUnit
+    public static IDimensionalObject<Unit3D> TranslateX(this IDimensionalObject<Unit3D> obj, Unit amount)
     {
-        return new Translation<TUnit>((0, amount, 0), obj);
+        return new Translation<Unit3D>((amount, 0, 0), obj);
     }
 
-    public static IDimensionalObject<TUnit> TranslateZ<TUnit>(this IDimensionalObject<TUnit> obj, Unit amount)
-        where TUnit : IDimensionalUnit
+    public static IDimensionalObject<Unit2D> TranslateX(this IDimensionalObject<Unit2D> obj, Unit amount)
     {
-        return new Translation<TUnit>((0, 0, amount), obj);
+        return new Translation<Unit2D>((amount, 0), obj);
+    }
+
+    public static IDimensionalObject<Unit3D> TranslateY(this IDimensionalObject<Unit3D> obj, Unit amount)
+    {
+        return new Translation<Unit3D>((0, amount, 0), obj);
+    }
+
+    public static IDimensionalObject<Unit2D> TranslateY(this IDimensionalObject<Unit2D> obj, Unit amount)
+    {
+        return new Translation<Unit2D>((0, amount), obj);
+    }
+
+    public static IDimensionalObject<Unit3D> TranslateZ(this IDimensionalObject<Unit3D> obj, Unit amount)
+    {
+        return new Translation<Unit3D>((0, 0, amount), obj);
     }
 }

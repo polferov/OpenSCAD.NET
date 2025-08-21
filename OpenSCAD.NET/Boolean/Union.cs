@@ -27,4 +27,10 @@ public static class UnionExtensions
     {
         return new Union<TUnit>(objects);
     }
+    
+    public static IDimensionalObject<TUnit> Union<TUnit>(this IDimensionalObject<TUnit> left, IDimensionalObject<TUnit> right)
+        where TUnit : IDimensionalUnit
+    {
+        return new Union<TUnit>(left, right);
+    }
 }
