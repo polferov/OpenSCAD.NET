@@ -5,6 +5,7 @@ namespace OpenSCAD.NET.Units;
 public readonly struct Unit2D(Unit x, Unit y) :
     IDimensionalUnit,
     IAdditionOperators<Unit2D, Unit2D, Unit2D>,
+    ISubtractionOperators<Unit2D, Unit2D, Unit2D>,
     IMultiplyOperators<Unit2D, decimal, Unit2D>,
     IDivisionOperators<Unit2D, decimal, Unit2D>
 {
@@ -16,6 +17,21 @@ public readonly struct Unit2D(Unit x, Unit y) :
         return $"[{X}, {Y}]";
     }
 
+    public Unit Length =>
+        Unit.FromMillimeters(
+            (decimal)Math.Sqrt((double)(X.Millimeters * X.Millimeters + Y.Millimeters * Y.Millimeters)));
+
+    public Unit2D Normalize()
+    {
+        var length = Length.Millimeters;
+        if (length == 0)
+            throw new InvalidOperationException("Cannot normalize a zero-length vector.");
+        return new Unit2D(
+            Unit.FromMillimeters(X.Millimeters / length),
+            Unit.FromMillimeters(Y.Millimeters / length)
+        );
+    }
+
     public static implicit operator Unit2D(ValueTuple<Unit, Unit> tuple)
         => new(tuple.Item1, tuple.Item2);
 
@@ -23,6 +39,12 @@ public readonly struct Unit2D(Unit x, Unit y) :
         => new(
             left.X + right.X,
             left.Y + right.Y
+        );
+
+    public static Unit2D operator -(Unit2D left, Unit2D right)
+        => new(
+            left.X - right.X,
+            left.Y - right.Y
         );
 
     public static Unit2D operator *(Unit2D left, decimal right) =>

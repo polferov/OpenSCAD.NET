@@ -8,6 +8,8 @@ namespace OpenSCAD.NET.Units;
 public readonly struct Unit :
     IDimensionalUnit,
     IAdditionOperators<Unit, Unit, Unit>,
+    ISubtractionOperators<Unit, Unit, Unit>,
+    IUnaryNegationOperators<Unit, Unit>,
     IMultiplyOperators<Unit, decimal, Unit>,
     IDivisionOperators<Unit, decimal, Unit>
 {
@@ -32,6 +34,9 @@ public readonly struct Unit :
     public static Unit operator +(Unit left, Unit right)
         => new(left.Millimeters + right.Millimeters);
 
+    public static Unit operator -(Unit left, Unit right)
+        => new(left.Millimeters - right.Millimeters);
+
     public static Unit operator *(Unit left, decimal right)
         => new(left.Millimeters * right);
 
@@ -45,6 +50,9 @@ public readonly struct Unit :
 
     public Unit3D ToUnit3D()
         => new Unit3D(this, this, this);
+
+    public static Unit operator -(Unit value)
+        => new(-value.Millimeters);
 }
 
 public static class LengthUnitExtensions

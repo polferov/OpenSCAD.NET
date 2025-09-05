@@ -80,23 +80,32 @@ public class Grid : IDimensionalObject<Unit2D>
         return Square.FromSideLength(sideLength);
     }
 
-    public static Grid DiagonalSquareHoleGrid(int cellsX, int cellsY, Unit diagonalLength, Unit diagonalLineWidth)
-        => DiagonalSquareHoleGrid(cellsX, cellsY, diagonalLength, diagonalLineWidth, DefaultSquareFactory);
+    public static Grid DiagonalSquareHoleGrid(int cellsX, int cellsY, Unit diagonalLength, Unit lineWidth,
+        bool lineWidthIsDiagonal,
+        bool startCenter)
+        => DiagonalSquareHoleGrid(cellsX, cellsY, diagonalLength, lineWidth, lineWidthIsDiagonal, startCenter,
+            DefaultSquareFactory);
 
-    public static Grid DiagonalSquareHoleGrid(int cellsX, int cellsY, Unit diagonalLength, Unit diagonalLineWidth,
+    public static Grid DiagonalSquareHoleGrid(int cellsX, int cellsY, Unit diagonalLength, Unit lineWidth,
+        bool lineWidthIsDiagonal, bool startCenter,
         Func<Unit, IDimensionalObject<Unit2D>> squareFactory)
     {
         var sideLength = diagonalLength / (decimal)Math.Sqrt(2);
         var square = squareFactory(sideLength)
             .RotateZ(45.deg());
 
-        var lineWidth = diagonalLineWidth * (decimal)Math.Sqrt(2);
+        if (lineWidthIsDiagonal)
+            lineWidth = lineWidth * (decimal)Math.Sqrt(2);
 
         var secondSquare = square
             .Translate(((diagonalLength + lineWidth) / 2, (diagonalLength + lineWidth) / 2));
 
         var hole = square.Union(secondSquare)
             .TranslateY((diagonalLength + lineWidth / 2) * -1);
+
+
+        if (startCenter)
+            hole = hole.TranslateX((diagonalLength + lineWidth) * -0.5m);
 
 
         return new Grid(cellsX, cellsY, 1, 1, (diagonalLength, diagonalLength), (lineWidth, lineWidth), (0, 0), hole);
