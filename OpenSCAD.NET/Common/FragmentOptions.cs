@@ -22,10 +22,18 @@ public struct FragmentOptions
         return sb.ToString();
     }
 
+    public readonly void Write(StringWriter w)
+    {
+        if (!Fn.HasValue)
+            return;
+        w.WriteLine($"$fn = {Fn};");
+    }
+
     public static FragmentOptions FromFn(uint fn)
     {
         return new FragmentOptions(fn);
     }
-    
-    public static readonly FragmentOptions HighRes = new FragmentOptions(100);
+
+    public static readonly FragmentOptions HighRes = new(100);
+    public static readonly FragmentOptions MidRes = new(40);
 }

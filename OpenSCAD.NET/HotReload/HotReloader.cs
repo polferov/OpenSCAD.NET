@@ -50,7 +50,7 @@ public static class HotReloader
         });
     }
 
-    public static async ValueTask RunAsync(string[] args)
+    public static void Run(string[] args)
     {
         if (!_isFirstRun)
             return;
@@ -61,7 +61,7 @@ public static class HotReloader
 
         while (true)
         {
-            await Task.Delay(1000);
+            Thread.Sleep(1000);
         }
     }
 
