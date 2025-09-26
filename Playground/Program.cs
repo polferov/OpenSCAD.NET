@@ -12,16 +12,19 @@ using OpenSCAD.NET.Units;
 HotReloader.Run(args);
 HotReloader.RunPreviewer();
 
-var spoonDiam = 30.mm();
-var spoonDiamBottom = 20.mm();
-var spoonDepth = 10.mm();
+
+// values from playing around with https://www.omnicalculator.com/math/truncated-cone-volume
+// trying to get around 11cm^3
+var spoonRad = 18.mm();
+var spoonRadBottom = 12.mm();
+var spoonDepth = 15.mm();
 var handleWidth = 10.mm();
 var handleLength = 50.mm();
-var thickness = 3.mm();
+var thickness = 1.2.mm();
 
 
 var cupInner = Cylinder2R
-    .FromDiametersAndHeight(spoonDiam, spoonDiamBottom, spoonDepth);
+    .FromRadiiAndHeight(spoonRad, spoonRadBottom, spoonDepth);
 
 var cup = cupInner
     .Minkowski(Sphere.FromRadius(thickness))
@@ -36,7 +39,8 @@ var spoonBase = cup.Intersect(Cylinder1R.FromDiameterAndHeight(100.mm(), thickne
 
 var model = spoonBase.Union(cup).Subtract(cupInner.TranslateZ(-0.01m.mm()));
 var sw = new StringWriter();
-FragmentOptions.MidRes.Write(sw);
+// FragmentOptions.MidRes.Write(sw);
+FragmentOptions.HighRes.Write(sw);
 model.Write(sw, 0);
 var scad = sw.ToString();
 File.WriteAllText("./out.scad", scad);
