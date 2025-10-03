@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace OpenSCAD.NET.CondeConsistency;
+namespace OpenSCAD.NET.CodeConsistency;
 
 public class ConstructorTests
 {

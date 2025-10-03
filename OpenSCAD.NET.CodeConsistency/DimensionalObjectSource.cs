@@ -1,7 +1,7 @@
 using System.Collections;
 using OpenSCAD.NET.Common;
 
-namespace OpenSCAD.NET.CondeConsistency;
+namespace OpenSCAD.NET.CodeConsistency;
 
 public class DimensionalObjectSource : IEnumerable<object[]>
 {
