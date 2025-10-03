@@ -12,32 +12,27 @@ using OpenSCAD.NET.Units;
 HotReloader.Run(args);
 HotReloader.RunPreviewer();
 
+var sideLength = 15.mm();
+var offsetZ = 1.5.mm();
+var ptfeHoleDiam = 5.5m.mm();
+var screwHoleDiam = 5.5.mm();
+var screwHoleDepth = 3.mm();
+var screwHeadDiam = 10.mm();
 
-// values from playing around with https://www.omnicalculator.com/math/truncated-cone-volume
-// trying to get around 11cm^3
-var spoonRad = 18.mm();
-var spoonRadBottom = 12.mm();
-var spoonDepth = 15.mm();
-var handleWidth = 10.mm();
-var handleLength = 50.mm();
-var thickness = 1.2.mm();
+var cube = Cube.FromSideLength(sideLength, center: true)
+    .TranslateZ(offsetZ);
 
+var ptfeMount = Cylinder1R.FromDiameterAndHeight(ptfeHoleDiam, sideLength + offsetZ * 2 + 1, center: true);
 
-var cupInner = Cylinder2R
-    .FromRadiiAndHeight(spoonRad, spoonRadBottom, spoonDepth);
+var screwHole = Cylinder1R.FromDiameterAndHeight(screwHoleDiam, sideLength + 1, center: true);
+var screwHeadCutout = Cylinder1R.FromDiameterAndHeight(screwHeadDiam, sideLength, center: false)
+    .TranslateZ(-sideLength / 2 + screwHoleDepth);
+var screwCutout = screwHole.Union(screwHeadCutout)
+    .RotateY(90.deg());
 
-var cup = cupInner
-    .Minkowski(Sphere.FromRadius(thickness))
-    .Intersect(Cylinder1R.FromDiameterAndHeight(100.mm(), 100.mm()));
-
-var spoonBase = cup.Intersect(Cylinder1R.FromDiameterAndHeight(100.mm(), thickness))
-    .Hull(
-        Circle.FromDiameter(handleWidth).TranslateX(handleLength)
-            .Extrude(thickness)
-    );
+var model = cube.Subtract(ptfeMount, screwCutout);
 
 
-var model = spoonBase.Union(cup).Subtract(cupInner.TranslateZ(-0.01m.mm()));
 var sw = new StringWriter();
 // FragmentOptions.MidRes.Write(sw);
 FragmentOptions.HighRes.Write(sw);
