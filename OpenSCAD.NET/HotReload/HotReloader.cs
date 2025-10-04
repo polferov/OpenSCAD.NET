@@ -7,6 +7,9 @@ using OpenSCAD.NET.HotReload;
 
 namespace OpenSCAD.NET.HotReload;
 
+/// <summary>
+/// Provides hot-reloading capabilities for the application.
+/// </summary>
 public static class HotReloader
 {
     private static bool _processRunning;
@@ -34,6 +37,11 @@ public static class HotReloader
     });
 
 
+    /// <summary>
+    /// Runs the OpenSCAD previewer with the generated SCAD file.
+    /// Closes the application when the previewer is closed.
+    /// Closes the previewer when the application is closed.
+    /// </summary>
     public static void RunPreviewer()
     {
         if (_processRunning)
@@ -50,6 +58,11 @@ public static class HotReloader
         });
     }
 
+    /// <summary>
+    /// Runs a loop that keeps the application alive and handles hot-reloading.
+    /// Reruns the model generation (the whole program, actually) on hot-reload.
+    /// </summary>
+    /// <param name="args">arguments passed to the program</param>
     public static void Run(string[] args)
     {
         if (!_isFirstRun)
